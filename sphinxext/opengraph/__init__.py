@@ -154,19 +154,14 @@ def get_tags(
 
     # Check for meta description override
     meta_description_exists = get_meta_description(context['metatags'])
-    copy_og_desc = getattr(config, 'ogp_copy_og_description_to_meta', False)
-    if (
-        config.ogp_enable_meta_description
-        and not meta_description_exists
-        and copy_og_desc
-        and og_description
-    ):
+    if og_description and not meta_description_exists:
         meta_tags['description'] = og_description
     elif (
         config.ogp_enable_meta_description
         and not meta_description_exists
         and description
         and not og_description
+        and getattr(config, 'ogp_copy_og_description_to_meta', False)
     ):
         meta_tags['description'] = description
 
